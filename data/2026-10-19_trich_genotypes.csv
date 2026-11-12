@@ -1,0 +1,12 @@
+Taxon,Genotype,Assembly_Accession,NCBI_Link
+Trichinella spiralis,T1,GCA_001447595.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447595.1/
+Trichinella nativa,T2,GCA_001447565.2,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447565.2/
+Trichinella britovi,T3,GCA_001447585.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447585.1/
+Trichinella pseudospiralis,T4,GCA_001447575.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447575.1/
+Trichinella murrelli,T5,GCA_001447425.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447425.1/
+Trichinella nelsoni,T7,GCA_001447455.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447455.1/
+Trichinella sp. T8,T8,GCA_001447745.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447745.1/
+Trichinella sp. T9,T9,GCA_001447505.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447505.1/
+Trichinella papuae,T10,GCA_001447755.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447755.1/
+Trichinella zimbabwensis,T11,GCA_001447665.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447665.1/
+Trichinella patagoniensis,T12,GCA_001447655.1,https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_001447655.1/
