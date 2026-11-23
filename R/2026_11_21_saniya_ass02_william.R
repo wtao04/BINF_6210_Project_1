@@ -1,3 +1,23 @@
+############################################################
+# BINF 6210 Assignment 2 - Revised Script
+#
+# Original Author: William Tao
+#
+# Revisions and Additional Analysis: Saniya Chadha
+#
+# Contributions:
+# - William Tao: Developed the original script, performed
+#   the initial TE analyses, statistical testing, and
+#   visualizations.
+#
+# - Saniya Chadha: Reviewed and revised the script by
+#   improving figure labels and readability, adding
+#   automated figure export with ggsave(), creating a
+#   reusable find_outliers() function, adding code comments
+#   and formatting improvements, and incorporating a
+#   chi-square test to compare TE class composition between
+#   species.
+############################################################
 
 # 01 Load libraries + datasets ----
 
@@ -5,8 +25,6 @@ library(tidyverse)
 library(viridis)
 library(ggtext)
 library(ggplot2)
-
-setwd("./R/")
 
 t_spiralis <- read_csv("../data/GCA_001447595.1.csv")
 t_spiralis
@@ -38,6 +56,38 @@ outliers_spiralis <- subset(t_spiralis, t_spiralis$perc_div<(Q1_spiralis - 1.5*I
 #EDIT: can write nrow(outliers_spiralis)
 nrow(outliers_spiralis)
 dim(outliers_spiralis) #7
+
+#EDIT: Since the code is repeated twice for both species maybe we can create a function to be used for both species
+find_outliers <- function(df) {
+Q1 <- quantile(df$perc_div, 0.25)
+Q3 <- quantile(df$perc_div, 0.75)
+IQR_val <- IQR(df$perc_div)
+
+subset(
+  df,
+  perc_div < (Q1 - 1.5 * IQR_val) |
+    perc_div > (Q3 + 1.5 * IQR_val)
+)
+}
+# Calculate statistics for T. spiralis
+Q1_spiralis <- quantile(t_spiralis$perc_div, 0.25)
+Q3_spiralis <- quantile(t_spiralis$perc_div, 0.75)
+IQR_spiralis <- IQR(t_spiralis$perc_div)
+outliers_spiralis <- find_outliers(t_spiralis)
+
+# Calculate statistics for T. britovi
+Q1_britovi <- quantile(t_britovi$perc_div, 0.25)
+Q3_britovi <- quantile(t_britovi$perc_div, 0.75)
+IQR_britovi <- IQR(t_britovi$perc_div)
+outliers_britovi <- find_outliers(t_britovi)
+# Remove outliers
+t_spiralis_out_removed <- t_spiralis |>
+  filter(row %notin% outliers_spiralis$row)
+
+t_britovi_out_removed <- t_britovi |>
+  filter(row %notin% outliers_britovi$row)
+
+
 
 #EDIT: Consider reformatting long ggplot statements across multiple lines and grouping related arguments together additional spacing and indentation would improve readability and make future modifications or debugging easier.
 t_spiralis |> 
@@ -101,6 +151,12 @@ dim(t_spiralis_out_removed) #1030
 t_britovi_out_removed <- t_britovi |> filter(row %notin% outliers_britovi$row)
 dim(t_britovi_out_removed) #1176
 
+#EDIT: Summary of code after identifiying outliers, table created
+summary_stats <- data.frame(
+  Species = c("T. spiralis", "T. britovi"),
+  Outliers = c(nrow(outliers_spiralis),
+               nrow(outliers_britovi))
+) |> view()
 
 # 03 Perform Wilcoxon tests: percent divergence between species, within each TA mathcing_class ----
 #EDIT: another additional test may be a chi-square test that may complement the Wilcoxon test by comparing the frequency distribution of TE classes between species 
